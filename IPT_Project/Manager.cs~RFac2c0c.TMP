@@ -1,0 +1,75 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
+
+namespace IPT_Project
+{
+    public partial class Manager : Form
+    {
+        static string myconnstring = ConfigurationManager.ConnectionStrings["connstring"].ConnectionString;
+        public Manager()
+        {
+            InitializeComponent();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            dateTimePicker1.Format = DateTimePickerFormat.Custom;
+            dateTimePicker1.CustomFormat = "MM/dd/yyyy hh:mm:ss";
+        }
+
+        private void Manager_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string[] arr = new string[4];
+            arr[0] = textBox1.Text;
+            arr[1] = dateTimePicker1.Text;
+            arr[2] = dateTimePicker2.Text;
+            ListViewItem lv = new ListViewItem(arr);
+            listView1.Items.Add(lv);
+
+            string sql = "INSERT INTO Projects (project_name, start_date, end_date, manager_id) VALUES (@project_name, @start_date, @end_date, @manager_id)";
+            SqlConnection conn = new SqlConnection(myconnstring);
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@project_name", arr[0]);
+            cmd.Parameters.AddWithValue("@start_date", arr[0]);
+            cmd.Parameters.AddWithValue("@end_date", arr[0]);
+            cmd.Parameters.AddWithValue("@manager_id", arr[0]);
+            //SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM [ProjectsDb].[dbo].[Login] L join [ProjectsDb].[dbo].[Roles] R on R.Login_id=L.id where RoleName='Manager' WHERE username ='" + email.Text + "' AND Password ='" + password.Text + "' AND RoleName='Manager'", conn);
+            //DataTable dt = new DataTable();
+            //sda.Fill(dt);
+
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            /*SqlConnection conn = new SqlConnection(myconnstring);
+            SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM [ProjectsDb].[dbo].[Login] L join [ProjectsDb].[dbo].[Roles] R on R.Login_id=L.id where RoleName='Manager' WHERE username ='" + email.Text + "' AND Password ='" + password.Text + "' AND RoleName='Manager'", conn);
+            DataTable dt = new DataTable();
+            sda.Fill(dt);*/
+            comboBox1.Items.Add("12");
+            comboBox1.Items.Add("15");
+
+        }
+    }
+}
